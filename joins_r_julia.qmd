@@ -1,0 +1,33 @@
+---
+title: "Analysing how R and Julia perform joins"
+author: "Florent Bédécarrats"
+jupyter: julia-1.8
+---
+
+We name "units" comparaable entities that will be compared through matching.
+We name "strata" a combination of covariates such as categorical covariates have the same value (eg. country and biome) and continuous variable have se thame binned values (eg. elevation, slope or initial forest cover).
+We create a dataframe of treatment with 1 unit belonging to a first strata (eg. Brazilian areas of low and flat initially dense tropocal moist forest), 2 units of a second strata (eg. Brazilian areas of low and flat initially sparse tropical moist forest)
+
+```{julia}
+import Pkg; Pkg.add("DataFrames")
+using DataFrames
+
+treatments = DataFrame(
+    id1 = ["a", "b", "c", "d", "e", "f"],
+    strata = [1, 2, 2, 3, 3, 3]
+)
+print(series1)
+``` 
+
+```{julia}
+controls = DataFrame(
+    id2 = ["g", "h", "i", "j", "k", "l", "m", "n"],
+    strata = [1, 1, 2, 2, 3, 3, 3, 4]
+)
+print(series2)
+``` 
+
+```{julia}
+matching = join(treatments, controls, on = :strata, kind = :inner) 
+print(matching)
+``` 
